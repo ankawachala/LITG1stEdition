@@ -19,10 +19,10 @@ public class Menu {
 			Scanner s=new Scanner(System.in);
 			i=s.nextInt();
 				if(i==1){
-					System.out.println("Please type in what you did you buy and then press Enter");
+					System.out.println("Please type in what did you buy and then press Enter");
 					String k=s.next();
 					TabWhat.add(k);
-					System.out.println("Please type in when did yu buy it and then press Enter");
+					System.out.println("Please type in when did you buy it and then press Enter");
 					String l=s.next();
 					TabWhen.add(l);
 					System.out.println("Please type in where did you buy it and then press Enter");
