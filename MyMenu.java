@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,9 +9,12 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,7 +31,7 @@ public class MyMenu {
 
 	final JFrame myFrame;
 	final JPanel menuPanel, enterPanel, showPanel;
-	JButton enterButton, showButton, exitButton, saveButton, goBack1Button, goBack2Button, nextButton, previousButton;
+	JButton enterButton, showButton, exitButton, saveButton, goBack1Button, goBack2Button, nextButton, previousButton, browseBillButton;
 	JLabel q1, q2, q3, q4;
 	JTextField a1, a2, a3, a4;
 	ArrayList<String> WhatList, WhenList, WhereList, HowMuchList;
@@ -57,6 +61,8 @@ public class MyMenu {
 	myFrame.setSize(700, 500);
 	// myFrame.setBackground(Color.WHITE); - it doesn't work :-(ó
 	
+	//JDBC db = new JDBC();
+	//db.createDB();
 	
 	// MenuBar details
 	menuBar = new JMenuBar();
@@ -120,24 +126,24 @@ public class MyMenu {
 	
 	// Panels
 	menuPanel = new JPanel(){
-		private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic1.jpg"));
+		private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic.jpg"));
 		   public void paint(Graphics g) {
 		    super.paint(g);
-		    g.drawImage(backgroundImage, 0, 0, null);
+		    g.drawImage(backgroundImage, 0, 0, myFrame.getWidth(), (myFrame.getWidth()/7), null);
 		   }
 		  };
 	enterPanel = new JPanel(){
-		private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic1.jpg"));
+		private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic.jpg"));
 		   public void paint(Graphics g) {
 		    super.paint(g);
-		    g.drawImage(backgroundImage, 0, 0, null);
+		    g.drawImage(backgroundImage, 0, 0, myFrame.getWidth(), (myFrame.getWidth()/7), null);
 		   }
 		  };
 	showPanel = new JPanel(){
-		private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic1.jpg"));
+		private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic.jpg"));
 		   public void paint(Graphics g) {
 		    super.paint(g);
-		    g.drawImage(backgroundImage, 0, 0, null);
+		    g.drawImage(backgroundImage, 0, 0, myFrame.getWidth(), (myFrame.getWidth()/7), null);
 		   }
 		  };
 	
@@ -178,6 +184,7 @@ public class MyMenu {
 	enterButton.setPreferredSize(new Dimension(250, 50));
 	enterButton.setBackground(Color.BLACK);
 	enterButton.setForeground(Color.WHITE);
+	enterButton.setFocusable(false);
 	menuPanel.add(enterButton, c);
 	
 	// Button to hide menuPanel and show showPanel
@@ -189,6 +196,7 @@ public class MyMenu {
 	showButton.setPreferredSize(new Dimension(250, 50));
 	showButton.setBackground(Color.BLACK);
 	showButton.setForeground(Color.WHITE);
+	showButton.setFocusable(false);
 	menuPanel.add(showButton, c);
 	
 	
@@ -202,6 +210,7 @@ public class MyMenu {
 	exitButton.setPreferredSize(new Dimension(250, 50));
 	exitButton.setBackground(Color.BLACK);
 	exitButton.setForeground(Color.WHITE);
+	exitButton.setFocusable(false);
 	menuPanel.add(exitButton, c);
 	
 	
@@ -233,7 +242,7 @@ public class MyMenu {
 
 			menuPanel.setVisible(false);
 			showPanel.setVisible(true);
-			showPanel.setSize(myFrame.getSize());
+//			showPanel.setSize(myFrame.getSize());
 			previousButton.setEnabled(false);
 			
 			if(WhatList.isEmpty()==true)
@@ -248,7 +257,7 @@ public class MyMenu {
 			Object[] titleRow = {columnName1, columnName2, columnName3, columnName4, columnName5};
 			tableModel.addRow(titleRow);
 			
-			for (int i = 0; i<5; i++){
+			for (int i = 0; i<5 && i<WhatList.size(); i++){
 				   
 				int ID2 = i+1;
 				String What = WhatList.get(i);
@@ -353,6 +362,7 @@ public class MyMenu {
 	saveButton.setBackground(Color.BLACK);
 	saveButton.setForeground(Color.WHITE);	
 	saveButton.setFont(buttonFont);
+	saveButton.setFocusable(false);
 	enterPanel.add(saveButton, c);
 	
 	// Button to go back from enterPanel to the main menu
@@ -365,10 +375,32 @@ public class MyMenu {
 	goBack1Button.setBackground(Color.BLACK);
 	goBack1Button.setForeground(Color.WHITE);	
 	goBack1Button.setFont(buttonFont);
+	goBack1Button.setFocusable(false);
 	enterPanel.add(goBack1Button, c);
-	
-	showPanel.add(showTable);
 
+	
+	
+// SHOW PANEL
+	
+	c.insets = new Insets(50, 0, 0, 0);
+	c.gridx = 0;
+	c.gridy = 1;
+	showPanel.add(showTable, c);
+	
+	// Button to browse payment confirmation
+	browseBillButton = new JButton("BROWSE YOUR BILL");
+	c.insets = new Insets(0, 0, 0, 0);
+	c.gridx = 0;
+	c.gridy = 7;
+	
+	browseBillButton.setPreferredSize(new Dimension(225, 45));
+	browseBillButton.setBackground(Color.WHITE);
+	browseBillButton.setForeground(Color.BLACK);	
+	browseBillButton.setFont(buttonFont);
+	browseBillButton.setFocusable(false);
+	enterPanel.add(browseBillButton, c);
+	
+	
 	// Saving user's answers in ArrayLists & load its data into JTable
 	WhatList= new ArrayList<String>();
 	WhenList = new ArrayList<String>();
@@ -404,7 +436,7 @@ public class MyMenu {
 			
 			enterPanel.setVisible(false);
 			menuPanel.setVisible(true);
-			menuPanel.setSize(myFrame.getSize());
+//			menuPanel.setSize(myFrame.getSize());
 		}	
 	});		
 
@@ -421,6 +453,7 @@ public class MyMenu {
 		goBack2Button.setBackground(Color.BLACK);
 		goBack2Button.setForeground(Color.WHITE);	
 		goBack2Button.setFont(buttonFont);
+		goBack2Button.setFocusable(false);
 		showPanel.add(goBack2Button, c);
 		
 	
@@ -433,6 +466,7 @@ public class MyMenu {
 		nextButton.setBackground(Color.BLACK);
 		nextButton.setForeground(Color.WHITE);	
 		nextButton.setFont(buttonFont);
+		nextButton.setFocusable(false);
 		showPanel.add(nextButton, c);
 
 		
@@ -445,18 +479,21 @@ public class MyMenu {
 		previousButton.setBackground(Color.BLACK);
 		previousButton.setForeground(Color.WHITE);	
 		previousButton.setFont(buttonFont);
+		previousButton.setFocusable(false);
 		showPanel.add(previousButton, c);
 		
 	
 	// ShowPanel's ActionListeners
 	
+	final Click clickCounter = new Click();
+		
 	goBack2Button.addActionListener(new ActionListener(){
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
 			showPanel.setVisible(false);
 			menuPanel.setVisible(true);
-			menuPanel.setSize(myFrame.getSize());
+			clickCounter.setClickedValue(0);
 			
 			if (tableModel.getRowCount() > 0) {
             for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
@@ -468,10 +505,11 @@ public class MyMenu {
 	
 	
 	nextButton.addActionListener(new ActionListener(){
-	
-		int clicked;
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			int clicked = clickCounter.getClickedValue();
 			
 			previousButton.setEnabled(true);
 			
@@ -484,7 +522,7 @@ public class MyMenu {
 			Object[] titleRow = {columnName1, columnName2, columnName3, columnName4, columnName5};
 			tableModel.addRow(titleRow);
 			
-			for (int i = 5+(5*clicked); i<10+(5*clicked); i++){
+			for (int i = 5+(5*clicked); i<10+(5*clicked) && i<WhatList.size(); i++){
 				   
 				int ID2 = i+1;
 				String What = WhatList.get(i);
@@ -507,32 +545,97 @@ public class MyMenu {
 				}
 			}
 			
-			clicked++;
+			clickCounter.setClickedValue(clicked+1);
 		}
 	});
 
 	
-	/*previousButton.addActionListener(new ActionListener(){
-		
-		int clicked;
+	previousButton.addActionListener(new ActionListener(){
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
+			if (tableModel.getRowCount() > 0) {
+	            for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
+	                 tableModel.removeRow(i);
+	                   }
+	               }
+			
+			Object[] titleRow = {columnName1, columnName2, columnName3, columnName4, columnName5};
+			tableModel.addRow(titleRow);
+			
+			int clicked = clickCounter.getClickedValue();
+			
+			for (int i = 5+(5*(clicked-2)); i<10+(5*(clicked-2)) && i<WhatList.size(); i++){
+				   
+				int ID2 = i+1;
+				String What = WhatList.get(i);
+				String When = WhenList.get(i);
+				String Where = WhereList.get(i);
+				String HowMuch = HowMuchList.get(i);
+
+				Object[] rows = {ID2, What, When, Where, HowMuch};
+				
+				tableModel.addRow(rows);
+				
+				if(ID2<=5)
+				{
+					previousButton.setEnabled(false);
+				}
+				
+				else
+				{
+					previousButton.setEnabled(true);
+				}
+				
+				if(ID2<=WhatList.size()-(WhatList.size()%5))
+				{
+					nextButton.setEnabled(true);
+				}
+				else
+				{
+					nextButton.setEnabled(false);
+				}
+			}
+			
+			clickCounter.setClickedValue(clicked-1);
+			
 		}
-	});*/
+	});
 	
+
 	myFrame.add(menuPanel);
 	myFrame.add(enterPanel);
 	myFrame.add(showPanel);
 	
-	menuPanel.setSize(myFrame.getSize());
-	enterPanel.setSize(myFrame.getSize());
-	showPanel.setSize(myFrame.getSize());
 	
 	menuPanel.setVisible(true);
 	enterPanel.setVisible(false);
 	showPanel.setVisible(false);
 	
 	myFrame.setVisible(true);
+	
+	myFrame.addComponentListener(new ComponentAdapter()
+	{
+		public void componentResized(ComponentEvent evt)
+		{
+			Component c=(Component)evt.getSource();
+			
+			if(menuPanel.isVisible()){
+				menuPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
+				menuPanel.validate();	
+			}
+		
+			else if(enterPanel.isVisible()){
+				enterPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
+				enterPanel.validate();
+			}
+			
+			else if(showPanel.isVisible()){
+				showPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
+				showPanel.validate();
+			}
+		}
+	});
 		}
 	}
