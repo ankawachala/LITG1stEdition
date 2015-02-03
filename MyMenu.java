@@ -32,13 +32,13 @@ public class MyMenu {
 	final JFrame myFrame;
 	final JPanel menuPanel, enterPanel, showPanel;
 	JButton enterButton, showButton, exitButton, saveButton, goBack1Button, goBack2Button, nextButton, previousButton, browseBillButton;
-	JLabel q1, q2, q3, q4;
+	JLabel q1, q2, q3, q4, warning;
 	JTextField a1, a2, a3, a4;
 	ArrayList<String> WhatList, WhenList, WhereList, HowMuchList;
 	JTable showTable;
 	JMenuBar menuBar;
-	JMenu menuFile, menuSettings, menuHelp;
-	JMenuItem option1, option2, option3, option4, option5, option6, option7;
+	JMenu menuFile, menuSettings, menuHelp, ChangeLanguageSettings;
+	JMenuItem saveChangesMenuFile, exitMenuFile, changeUserMenuSettings, aboutMyAppMenuHelp, englishLanguage, polishLanguage, arabicLanguage; 
 	
 		public static void main(String[] args) throws IOException 
 		{  
@@ -54,12 +54,13 @@ public class MyMenu {
 	Font enterPanelFont = new Font("Gill Sans MT", Font.PLAIN, 18);
 	Font menuBarFont = new Font("Gill Sans MT", Font.PLAIN, 16);
 	
+	
 	// MyFrame details
 	myFrame = new JFrame();
 	myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	myFrame.setTitle("MyApplication");
 	myFrame.setSize(700, 500);
-	// myFrame.setBackground(Color.WHITE); - it doesn't work :-(ó
+	myFrame.setBackground(Color.WHITE);
 	
 	//JDBC db = new JDBC();
 	//db.createDB();
@@ -71,56 +72,62 @@ public class MyMenu {
 	menuFile = new JMenu("File");
 	menuFile.setForeground(Color.WHITE);
 	menuFile.setFont(menuBarFont);
-	option1 = new JMenuItem("Option1");
-	option1.setBackground(Color.WHITE);	
-	option1.setForeground(Color.BLACK);
-	option1.setFont(menuBarFont);
-	option2 = new JMenuItem("Option2");
-	option2.setBackground(Color.WHITE);	
-	option2.setForeground(Color.BLACK);
-	option2.setFont(menuBarFont);
-	option3 = new JMenuItem("Option3");
-	option3.setBackground(Color.WHITE);	
-	option3.setForeground(Color.BLACK);
-	option3.setFont(menuBarFont);
+	saveChangesMenuFile = new JMenuItem("Save Changes");
+	saveChangesMenuFile.setBackground(Color.WHITE);	
+	saveChangesMenuFile.setForeground(Color.BLACK);
+	saveChangesMenuFile.setFont(menuBarFont);
+	exitMenuFile = new JMenuItem("Exit");
+	exitMenuFile.setBackground(Color.WHITE);	
+	exitMenuFile.setForeground(Color.BLACK);
+	exitMenuFile.setFont(menuBarFont);
 	
 	menuSettings = new JMenu("Settings");
 	menuSettings.setForeground(Color.WHITE);
 	menuSettings.setFont(menuBarFont);
-	option4 = new JMenuItem("Option4");
-	option4.setBackground(Color.WHITE);	
-	option4.setForeground(Color.BLACK);
-	option4.setFont(menuBarFont);
-	option5 = new JMenuItem("Option5");
-	option5.setBackground(Color.WHITE);	
-	option5.setForeground(Color.BLACK);
-	option5.setFont(menuBarFont);
+	changeUserMenuSettings = new JMenuItem("Change User");
+	changeUserMenuSettings.setBackground(Color.WHITE);	
+	changeUserMenuSettings.setForeground(Color.BLACK);
+	changeUserMenuSettings.setFont(menuBarFont);
+	ChangeLanguageSettings = new JMenu("Change Language");
+	ChangeLanguageSettings.setBackground(Color.WHITE);	
+	ChangeLanguageSettings.setForeground(Color.BLACK);
+	ChangeLanguageSettings.setFont(menuBarFont);
+	arabicLanguage = new JMenuItem("Arabic");
+	arabicLanguage.setBackground(Color.WHITE);	
+	arabicLanguage.setForeground(Color.BLACK);
+	arabicLanguage.setFont(menuBarFont);	englishLanguage = new JMenuItem("English");
+	englishLanguage.setBackground(Color.WHITE);	
+	englishLanguage.setForeground(Color.BLACK);
+	englishLanguage.setFont(menuBarFont);
+	polishLanguage = new JMenuItem("Polish");
+	polishLanguage.setBackground(Color.WHITE);	
+	polishLanguage.setForeground(Color.BLACK);
+	polishLanguage.setFont(menuBarFont);
+
 	
 	menuHelp = new JMenu("Help");
 	menuHelp.setForeground(Color.WHITE);
 	menuHelp.setFont(menuBarFont);
-	option6 = new JMenuItem("Option6");
-	option6.setBackground(Color.WHITE);	
-	option6.setForeground(Color.BLACK);
-	option6.setFont(menuBarFont);
-	option7 = new JMenuItem("Option7");
-	option7.setBackground(Color.WHITE);	
-	option7.setForeground(Color.BLACK);
-	option7.setFont(menuBarFont);
+	aboutMyAppMenuHelp = new JMenuItem("About MyApplication");
+	aboutMyAppMenuHelp.setBackground(Color.WHITE);	
+	aboutMyAppMenuHelp.setForeground(Color.BLACK);
+	aboutMyAppMenuHelp.setFont(menuBarFont);
 	
 	menuBar.add(menuFile);
 	menuBar.add(menuSettings);
 	menuBar.add(menuHelp);
 	
-	menuFile.add(option1);
-	menuFile.add(option2);
-	menuFile.add(option3);
+	menuFile.add(saveChangesMenuFile);
+	menuFile.addSeparator();
+	menuFile.add(exitMenuFile);
 	
-	menuSettings.add(option4);
-	menuSettings.add(option5);
+	menuSettings.add(changeUserMenuSettings);
+	menuSettings.add(ChangeLanguageSettings);
+	ChangeLanguageSettings.add(arabicLanguage);	
+	ChangeLanguageSettings.add(englishLanguage);
+	ChangeLanguageSettings.add(polishLanguage);
 	
-	menuHelp.add(option6);
-	menuHelp.add(option7);
+	menuHelp.add(aboutMyAppMenuHelp);
 
 	myFrame.setJMenuBar(menuBar);
 	
@@ -245,7 +252,7 @@ public class MyMenu {
 //			showPanel.setSize(myFrame.getSize());
 			previousButton.setEnabled(false);
 			
-			if(WhatList.isEmpty()==true)
+			if(WhatList.size()<=5)
 			{
 				nextButton.setEnabled(false);
 			}
@@ -287,18 +294,28 @@ public class MyMenu {
 		// q - question, a - answer
 	
 	
-		q1 = new JLabel("PRODUCT NAME:");
-		c.insets = new Insets(50, 0, 15, 295);
+		warning = new JLabel("Please fill in all of the required fields");
+		c.insets = new Insets(50, 0, 10, 0);
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 0;		
+		
+		warning.setFont(enterPanelFont);
+		warning.setForeground(Color.RED);
+		enterPanel.add(warning, c);
+		warning.setVisible(false);
+		
+		q1 = new JLabel("PRODUCT NAME:");
+		c.insets = new Insets(15, 0, 15, 295);
+		c.gridx = 0;
+		c.gridy = 1;
 
 		q1.setFont(enterPanelFont);
 		enterPanel.add(q1, c);
 		
 		a1 = new JTextField(17);
-		c.insets = new Insets(50, 250, 15, 100);
+		c.insets = new Insets(15, 250, 15, 100);
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 1;
 		
 		a1.setFont(enterPanelFont);
 		enterPanel.add(a1, c);
@@ -354,7 +371,7 @@ public class MyMenu {
 		
 	// Button to save data
 	saveButton = new JButton("SAVE");
-	c.insets = new Insets(35, 0, 0, 200);
+	c.insets = new Insets(25, 350, 0, 0);
 	c.gridx = 0;
 	c.gridy = 8;
 	
@@ -367,7 +384,7 @@ public class MyMenu {
 	
 	// Button to go back from enterPanel to the main menu
 	goBack1Button = new JButton("GO BACK");
-	c.insets = new Insets(35, 200, 0, 0);
+	c.insets = new Insets(25, 0, 0, 350);
 	c.gridx = 0;
 	c.gridy = 8;
 	
@@ -377,7 +394,19 @@ public class MyMenu {
 	goBack1Button.setFont(buttonFont);
 	goBack1Button.setFocusable(false);
 	enterPanel.add(goBack1Button, c);
-
+	
+	// Button to browse payment confirmation
+	browseBillButton = new JButton("BROWSE YOUR BILL");
+	c.insets = new Insets(25, 0, 0, 0);
+	c.gridx = 0;
+	c.gridy = 8;
+	
+	browseBillButton.setPreferredSize(new Dimension(200, 45));
+	browseBillButton.setBackground(Color.WHITE);
+	browseBillButton.setForeground(Color.BLACK);	
+	browseBillButton.setFont(buttonFont);
+	browseBillButton.setFocusable(false);
+	enterPanel.add(browseBillButton, c);
 	
 	
 // SHOW PANEL
@@ -386,19 +415,6 @@ public class MyMenu {
 	c.gridx = 0;
 	c.gridy = 1;
 	showPanel.add(showTable, c);
-	
-	// Button to browse payment confirmation
-	browseBillButton = new JButton("BROWSE YOUR BILL");
-	c.insets = new Insets(0, 0, 0, 0);
-	c.gridx = 0;
-	c.gridy = 7;
-	
-	browseBillButton.setPreferredSize(new Dimension(225, 45));
-	browseBillButton.setBackground(Color.WHITE);
-	browseBillButton.setForeground(Color.BLACK);	
-	browseBillButton.setFont(buttonFont);
-	browseBillButton.setFocusable(false);
-	enterPanel.add(browseBillButton, c);
 	
 	
 	// Saving user's answers in ArrayLists & load its data into JTable
@@ -414,6 +430,8 @@ public class MyMenu {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
+		if((!a1.getText().equals("") && !a2.getText().equals("") && !a3.getText().equals("") && !a4.getText().equals(""))){
+			
 			WhatList.add(a1.getText());
 			WhenList.add(a2.getText());
 			WhereList.add(a3.getText());
@@ -424,7 +442,26 @@ public class MyMenu {
 			a3.setText("");
 			a4.setText("");
 			
+			warning.setVisible(false);
 			a1.requestFocus();
+		}
+		
+		else{
+			
+			warning.setVisible(true);
+			if(a1.getText().equals("")){
+				a1.requestFocus();
+			}
+			else if(a2.getText().equals("")){
+				a2.requestFocus();
+			}
+			else if(a3.getText().equals("")){
+				a3.requestFocus();
+			}
+			else if(a4.getText().equals("")){
+				a4.requestFocus();
+			}
+		}
 				
 			}	
 		});
