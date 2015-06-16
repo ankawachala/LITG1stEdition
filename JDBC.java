@@ -1,17 +1,20 @@
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class JDBC {
 
+ArrayList<String> WhatList, WhenList, WhereList, HowMuchList, ImagePath;
+
 		   // JDBC driver name and database URL
 		   final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 		   final String DB_URL = "jdbc:mysql://localhost/";
-
+		   final String DB_URL2 = "jdbc:mysql://localhost/STUDENTS";
+		   
 		   //  Database credentials
 		   final String USER = "root";
 		   final String PASS = "";
-
 
 		   
 		   
@@ -65,7 +68,6 @@ public class JDBC {
 			         //STEP 2: Register JDBC driver
 			         Class.forName("com.mysql.jdbc.Driver");
 
-			   final String DB_URL2 = "jdbc:mysql://localhost/STUDENTS";
 
 			         //STEP 3: Open a connection
 			         System.out.println("Connecting to a selected database...");
@@ -78,9 +80,11 @@ public class JDBC {
 			         
 			         String sql = "CREATE TABLE IF NOT EXISTS REGISTRATION" +
 			                      "(id INTEGER not NULL, " +
-			                      " first VARCHAR(255), " + 
-			                      " last VARCHAR(255), " + 
-			                      " age INTEGER, " + 
+			                      " var1 VARCHAR(255), " + 
+			                      " var2 VARCHAR(255), " + 
+			                      " var3 VARCHAR(255), " +
+			                      " var4 VARCHAR(255), " +
+			                      " var5 VARCHAR(255), " +
 			                      " PRIMARY KEY ( id ))"; 
 
 			         stmt.executeUpdate(sql);
@@ -110,7 +114,7 @@ public class JDBC {
 		   
 		  
 		   
-		   public void insertRecord(String a, String b, String c, String d) {
+		   public void insertRecord(){
 			   Connection conn = null;
 			   Statement stmt = null;
 			   try{
@@ -120,7 +124,7 @@ public class JDBC {
 			      
 			      //STEP 3: Open a connection
 			      System.out.println("Connecting to a selected database...");
-			      conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			      conn = DriverManager.getConnection(DB_URL2, USER, PASS);
 			      System.out.println("Connected database successfully...");
 			      
 			      //STEP 4: Execute a query
@@ -128,10 +132,28 @@ public class JDBC {
 			      stmt = conn.createStatement();
 			      
 			   
+			      MyApplication howManyRecords = new MyApplication();
 			      
+			      int j;
+			      j = howManyRecords.listSize();
+			      
+			      for(int a=1; a<=j; a++){
+			    	  	WhatList.add(MyApplication.WhatListRecord(a));
+			    		WhenList.add(MyApplication.WhenListRecord(a));
+			    		WhereList.add(MyApplication.WhereListRecord(a));
+			    		HowMuchList.add(MyApplication.HowMuchListRecord(a));
+			    		ImagePath.add(MyApplication.ImagePathListRecord(a));
+			    		
+			    		String sql = "INSERT INTO Registration " +
+				                   "VALUES (WhatList.get(a), WhenList.get(a), WhereList.get(a), HowMuchList.get(a), ImagePath.get(a))";
+				                   stmt.executeUpdate(sql);
+			      }
+			      
+/*			      for(int i=0; i<j; i++){
 			      String sql = "INSERT INTO Registration " +
-			                   "VALUES ('a', 'b', 'c', 'd')";
+			                   "VALUES ('aa', 'bb', 'cc', 'dd', 'ee', 'ff')";
 			      stmt.executeUpdate(sql);
+			      }*/
 
 			      
 			      
@@ -162,7 +184,7 @@ public class JDBC {
 		   
 		   
 		   
-		   
+	/*	   
 		   public void selectRecord(){
 			   Connection conn = null;
 			   Statement stmt = null;
@@ -217,5 +239,5 @@ public class JDBC {
 		      }//end finally try
 		   }//end try
 		   System.out.println("Goodbye!");
-		}//end main
+		}//end main */
 }

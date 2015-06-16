@@ -36,32 +36,47 @@ public class MyApplication {
 	JButton enterButton, showButton, exitButton, saveButton, goBack1Button, goBack2Button, nextButton, previousButton, browseBillButton, uploadBillButton;
 	JLabel q1, q2, q3, q4, warning;
 	JTextField a1, a2, a3, a4;
-	ArrayList<String> WhatList, WhenList, WhereList;
+	static ArrayList<String> WhatList;
+	static ArrayList<String> WhenList;
+	static ArrayList<String> WhereList;
 	static ArrayList<String> HowMuchList;
-	ArrayList<String> ImagePath;
+	static ArrayList<String> ImagePath;
 	JTable showTable;
 	JMenuBar menuBar;
 	JMenu menuFile, menuSettings, menuHelp, ChangeLanguageSettings;
 	JMenuItem saveChangesMenuFile, exitMenuFile, changeUserMenuSettings, aboutMyAppMenuHelp, englishLanguage, polishLanguage, arabicLanguage;
 	JFileChooser fileChooser;
 	FileNameExtensionFilter filter;
-		
-		public String getHowMuchValue(int a){
-			return HowMuchList.get(a);
-		}
-		public String getWhatValue(int a){
-			return WhatList.get(a);
-		}
-		public String getWhenValue(int a){
-			return WhenList.get(a);
-		}
-		public String getWhereValue(int a){
-			return WhereList.get(a);
-		}
-		public String getImagePathValue(int a){
-			return ImagePath.get(a);
-		}
 	
+	
+	private int recordsNumber = WhatList.size();
+	public int listSize(){
+		return recordsNumber;
+		}
+	public static String WhatListRecord(int a){
+		
+		return WhatList.get(a);
+	}
+	public static String WhenListRecord(int a){
+		
+		return WhenList.get(a);
+	}
+	public static String WhereListRecord(int a){
+		
+		return WhereList.get(a);
+	}
+	public static String HowMuchListRecord(int a){
+		
+		return HowMuchList.get(a);
+	}
+	public static String ImagePathListRecord(int a){
+		
+		return ImagePath.get(a);
+	}
+	
+	
+	
+
 		public static void main(String[] args) throws IOException 
 		{  
 			new MyApplication(); 
@@ -69,7 +84,7 @@ public class MyApplication {
 
 		public MyApplication() throws IOException {
 			
-	//All fonts
+//All fonts
 	Font menuPanelFont = new Font("Gill Sans MT", Font.PLAIN, 20);
 	Font showTableFont = new Font("Gill Sans MT", Font.PLAIN, 14);
 	Font buttonFont = new Font("Gill Sans MT", Font.PLAIN, 16);
@@ -77,18 +92,19 @@ public class MyApplication {
 	Font menuBarFont = new Font("Gill Sans MT", Font.PLAIN, 16);
 	
 	
-	// MyFrame details
+// MyFrame details
 	myFrame = new JFrame();
 	myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	myFrame.setTitle("MyApplication");
 	myFrame.setSize(700, 500);
 	myFrame.setBackground(Color.WHITE);
 	
-	JDBC db = new JDBC();
+	final JDBC db = new JDBC();
 	db.createDB();
 	db.createTable();
 	
-	// MenuBar details
+	
+// MenuBar details
 	menuBar = new JMenuBar();
 	menuBar.setBackground(Color.BLACK);
 	
@@ -307,19 +323,27 @@ public class MyApplication {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			myFrame.dispose();
+			myFrame.dispose();			
+			db.insertRecord();
 			
-			String a;
-			String b;
-			String c;
-			String d;
+/*			Integer aa;
+			String bb;
+			String cc;
+			String dd;
+			String ee;
+			String ff;
+			
 			for(int i=0; i<WhatList.size(); i++){
-			a= WhatList.get(i);
-			b = WhatList.get(i);
-			c = WhatList.get(i);
-			d = WhatList.get(i);	
-			db.insertRecord(a, b, c, d);
-			}
+			aa= i+1;
+			bb = WhatList.get(i);
+			// WhatList, WhenList, WhereList, HowMuchList, ImagePath;
+			cc = WhenList.get(i);
+			dd = WhereList.get(i);
+			ee = HowMuchList.get(i);
+			ff = ImagePath.get(i);
+			
+			db.insertRecord(aa, bb, cc, dd, ee, ff);
+			}*/
 		}	
 	});
 	
