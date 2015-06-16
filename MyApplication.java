@@ -89,7 +89,6 @@ public class MyApplication {
 	Font showTableFont = new Font("Gill Sans MT", Font.PLAIN, 14);
 	Font buttonFont = new Font("Gill Sans MT", Font.PLAIN, 16);
 	Font enterPanelFont = new Font("Gill Sans MT", Font.PLAIN, 18);
-	Font menuBarFont = new Font("Gill Sans MT", Font.PLAIN, 16);
 	
 	
 // MyFrame details
@@ -105,70 +104,7 @@ public class MyApplication {
 	
 	
 // MenuBar details
-	menuBar = new JMenuBar();
-	menuBar.setBackground(Color.BLACK);
-	
-	menuFile = new JMenu("File");
-	menuFile.setForeground(Color.WHITE);
-	menuFile.setFont(menuBarFont);
-	saveChangesMenuFile = new JMenuItem("Save Changes");
-	saveChangesMenuFile.setBackground(Color.WHITE);	
-	saveChangesMenuFile.setForeground(Color.BLACK);
-	saveChangesMenuFile.setFont(menuBarFont);
-	exitMenuFile = new JMenuItem("Exit");
-	exitMenuFile.setBackground(Color.WHITE);	
-	exitMenuFile.setForeground(Color.BLACK);
-	exitMenuFile.setFont(menuBarFont);
-	
-	menuSettings = new JMenu("Settings");
-	menuSettings.setForeground(Color.WHITE);
-	menuSettings.setFont(menuBarFont);
-	changeUserMenuSettings = new JMenuItem("Change User");
-	changeUserMenuSettings.setBackground(Color.WHITE);	
-	changeUserMenuSettings.setForeground(Color.BLACK);
-	changeUserMenuSettings.setFont(menuBarFont);
-	ChangeLanguageSettings = new JMenu("Change Language");
-	ChangeLanguageSettings.setBackground(Color.WHITE);	
-	ChangeLanguageSettings.setForeground(Color.BLACK);
-	ChangeLanguageSettings.setFont(menuBarFont);
-	arabicLanguage = new JMenuItem("Arabic");
-	arabicLanguage.setBackground(Color.WHITE);	
-	arabicLanguage.setForeground(Color.BLACK);
-	arabicLanguage.setFont(menuBarFont);	englishLanguage = new JMenuItem("English");
-	englishLanguage.setBackground(Color.WHITE);	
-	englishLanguage.setForeground(Color.BLACK);
-	englishLanguage.setFont(menuBarFont);
-	polishLanguage = new JMenuItem("Polish");
-	polishLanguage.setBackground(Color.WHITE);	
-	polishLanguage.setForeground(Color.BLACK);
-	polishLanguage.setFont(menuBarFont);
-
-	
-	menuHelp = new JMenu("Help");
-	menuHelp.setForeground(Color.WHITE);
-	menuHelp.setFont(menuBarFont);
-	aboutMyAppMenuHelp = new JMenuItem("About MyApplication");
-	aboutMyAppMenuHelp.setBackground(Color.WHITE);	
-	aboutMyAppMenuHelp.setForeground(Color.BLACK);
-	aboutMyAppMenuHelp.setFont(menuBarFont);
-	
-	menuBar.add(menuFile);
-	menuBar.add(menuSettings);
-	menuBar.add(menuHelp);
-	
-	menuFile.add(saveChangesMenuFile);
-	menuFile.addSeparator();
-	menuFile.add(exitMenuFile);
-	
-	menuSettings.add(changeUserMenuSettings);
-	menuSettings.add(ChangeLanguageSettings);
-	ChangeLanguageSettings.add(arabicLanguage);	
-	ChangeLanguageSettings.add(englishLanguage);
-	ChangeLanguageSettings.add(polishLanguage);
-	
-	menuHelp.add(aboutMyAppMenuHelp);
-
-	myFrame.setJMenuBar(menuBar);
+	addMenuBar();
 	
 	// Panels
 	menuPanel = new JPanel(){
@@ -772,5 +708,73 @@ public class MyApplication {
 			}
 		}
 	});
+		}
+		private void addMenuBar() {
+			
+			Font menuBarFont = new Font("Gill Sans MT", Font.PLAIN, 16);
+			menuBar = new JMenuBar();
+			menuBar.setBackground(Color.BLACK);
+			
+			menuFile = new JMenu("File");
+			menuFile.setForeground(Color.WHITE);
+			menuFile.setFont(menuBarFont);
+			saveChangesMenuFile = new JMenuItem("Save Changes");
+			saveChangesMenuFile.setBackground(Color.WHITE);	
+			saveChangesMenuFile.setForeground(Color.BLACK);
+			saveChangesMenuFile.setFont(menuBarFont);
+			exitMenuFile = new JMenuItem("Exit");
+			exitMenuFile.setBackground(Color.WHITE);	
+			exitMenuFile.setForeground(Color.BLACK);
+			exitMenuFile.setFont(menuBarFont);
+			
+			menuSettings = new JMenu("Settings");
+			menuSettings.setForeground(Color.WHITE);
+			menuSettings.setFont(menuBarFont);
+			changeUserMenuSettings = new JMenuItem("Change User");
+			changeUserMenuSettings.setBackground(Color.WHITE);	
+			changeUserMenuSettings.setForeground(Color.BLACK);
+			changeUserMenuSettings.setFont(menuBarFont);
+			ChangeLanguageSettings = new JMenu("Change Language");
+			ChangeLanguageSettings.setBackground(Color.WHITE);	
+			ChangeLanguageSettings.setForeground(Color.BLACK);
+			ChangeLanguageSettings.setFont(menuBarFont);
+			arabicLanguage = new JMenuItem("Arabic");
+			arabicLanguage.setBackground(Color.WHITE);	
+			arabicLanguage.setForeground(Color.BLACK);
+			arabicLanguage.setFont(menuBarFont);	englishLanguage = new JMenuItem("English");
+			englishLanguage.setBackground(Color.WHITE);	
+			englishLanguage.setForeground(Color.BLACK);
+			englishLanguage.setFont(menuBarFont);
+			polishLanguage = new JMenuItem("Polish");
+			polishLanguage.setBackground(Color.WHITE);	
+			polishLanguage.setForeground(Color.BLACK);
+			polishLanguage.setFont(menuBarFont);
+
+			
+			menuHelp = new JMenu("Help");
+			menuHelp.setForeground(Color.WHITE);
+			menuHelp.setFont(menuBarFont);
+			aboutMyAppMenuHelp = new JMenuItem("About MyApplication");
+			aboutMyAppMenuHelp.setBackground(Color.WHITE);	
+			aboutMyAppMenuHelp.setForeground(Color.BLACK);
+			aboutMyAppMenuHelp.setFont(menuBarFont);
+			
+			menuBar.add(menuFile);
+			menuBar.add(menuSettings);
+			menuBar.add(menuHelp);
+			
+			menuFile.add(saveChangesMenuFile);
+			menuFile.addSeparator();
+			menuFile.add(exitMenuFile);
+			
+			menuSettings.add(changeUserMenuSettings);
+			menuSettings.add(ChangeLanguageSettings);
+			ChangeLanguageSettings.add(arabicLanguage);	
+			ChangeLanguageSettings.add(englishLanguage);
+			ChangeLanguageSettings.add(polishLanguage);
+			
+			menuHelp.add(aboutMyAppMenuHelp);
+
+			myFrame.setJMenuBar(menuBar);
 		}
 	}
