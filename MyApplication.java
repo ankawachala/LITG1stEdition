@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class MyApplication {
 
-	final JFrame myFrame;
+	JFrame myFrame;
 	JPanel menuPanel, enterPanel, showPanel;
 	JButton enterButton, showButton, exitButton, saveButton, goBack1Button, goBack2Button, nextButton, previousButton, browseBillButton, uploadBillButton;
 	JLabel q1, q2, q3, q4, warning;
@@ -79,9 +79,6 @@ public class MyApplication {
 		return ImagePath.get(a);
 	}
 
-
-
-
 	public static void main(String[] args) throws IOException 
 	{  
 		new MyApplication(); 
@@ -89,41 +86,76 @@ public class MyApplication {
 
 	public MyApplication() throws IOException {
 
-		//All fonts
-
-		Font buttonFont = new Font("Gill Sans MT", Font.PLAIN, 16);
-		Font enterPanelFont = new Font("Gill Sans MT", Font.PLAIN, 18);
-
-
-		// MyFrame details
-		myFrame = new JFrame();
-		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		myFrame.setTitle("MyApplication");
-		myFrame.setSize(700, 500);
-		myFrame.setBackground(Color.WHITE);
-
 		final JDBC db = new JDBC();
 		db.createDB();
 		db.createTable();
+		
+		initFrame();
 
-
-		// MenuBar details
 		addMenuBar();
 
-		// creating Panels
-		addPanels();
+		initPanels();
 
 		// ShowTable details
 		String columnName[] = {"ID", "PRODUCT NAME", "DATE OF PURCHASE", "SHOP NAME", "PRICE"};
 		tableModel = new DefaultTableModel(columnName, 0);
 		creatingShowTable();
 
-		// MENU PANEL
-		designMenuPanels(db);
+		designMenuPanel(db);
 
-		// ENTER & SHOW PANELS
 		designEnterPanel();		
 
+		designShowPanel();		
+
+		addPanels();
+		
+	} // end of the constructor
+	private void initFrame() {
+		myFrame = new JFrame();
+		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		myFrame.setTitle("MyApplication");
+		myFrame.setSize(700, 500);
+		myFrame.setBackground(Color.WHITE);
+	}
+	
+	private void addPanels() {
+		myFrame.add(menuPanel);
+		myFrame.add(enterPanel);
+		myFrame.add(showPanel);
+
+		menuPanel.setVisible(true);
+		enterPanel.setVisible(false);
+		showPanel.setVisible(false);
+
+		myFrame.setVisible(true);
+
+		myFrame.addComponentListener(new ComponentAdapter()
+		{
+			public void componentResized(ComponentEvent evt)
+			{
+				Component c=(Component)evt.getSource();
+
+				if(menuPanel.isVisible()){
+					menuPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
+					menuPanel.validate();	
+				}
+
+				else if(enterPanel.isVisible()){
+					enterPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
+					enterPanel.validate();
+				}
+
+				else if(showPanel.isVisible()){
+					showPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
+					showPanel.validate();
+				}
+			}
+		});
+	}
+	
+	private void designShowPanel() {
+		
+		Font buttonFont = new Font("Gill Sans MT", Font.PLAIN, 16);
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.insets = new Insets(50, 0, 0, 0);
@@ -145,7 +177,6 @@ public class MyApplication {
 		goBack2Button.setFocusable(false);
 		showPanel.add(goBack2Button, c);
 
-
 		nextButton = new JButton("NEXT");
 		c.insets = new Insets(50, 0, 0, 0);
 		c.gridx = 0;
@@ -157,7 +188,6 @@ public class MyApplication {
 		nextButton.setFont(buttonFont);
 		nextButton.setFocusable(false);
 		showPanel.add(nextButton, c);
-
 
 		previousButton = new JButton("PREVIOUS");
 		c.insets = new Insets(50, 350, 0, 0);
@@ -173,7 +203,6 @@ public class MyApplication {
 
 		// Button to browse payment confirmation
 		browseBillButton = new JButton("BROWSE YOUR BILL");
-
 
 		// ShowPanel's ActionListeners
 
@@ -303,43 +332,8 @@ public class MyApplication {
 			public void actionPerformed(ActionEvent e) {
 
 			}	
-		});		
-
-
-		myFrame.add(menuPanel);
-		myFrame.add(enterPanel);
-		myFrame.add(showPanel);
-
-
-		menuPanel.setVisible(true);
-		enterPanel.setVisible(false);
-		showPanel.setVisible(false);
-
-		myFrame.setVisible(true);
-
-		myFrame.addComponentListener(new ComponentAdapter()
-		{
-			public void componentResized(ComponentEvent evt)
-			{
-				Component c=(Component)evt.getSource();
-
-				if(menuPanel.isVisible()){
-					menuPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
-					menuPanel.validate();	
-				}
-
-				else if(enterPanel.isVisible()){
-					enterPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
-					enterPanel.validate();
-				}
-
-				else if(showPanel.isVisible()){
-					showPanel.setSize(myFrame.getWidth(), myFrame.getHeight());
-					showPanel.validate();
-				}
-			}
 		});
-	} // end of the constructor
+	}
 	private void designEnterPanel() {
 		
 		Font buttonFont = new Font("Gill Sans MT", Font.PLAIN, 16);
@@ -555,7 +549,8 @@ public class MyApplication {
 			}	
 		});
 	}
-	private void designMenuPanels(final JDBC db) {
+	
+	private void designMenuPanel(final JDBC db) {
 		
 		Font menuPanelFont = new Font("Gill Sans MT", Font.PLAIN, 20);
 		GridBagConstraints c = new GridBagConstraints();
@@ -697,7 +692,7 @@ public class MyApplication {
 		showTable.getColumnModel().getColumn(4).setPreferredWidth(75);
 	}
 	
-	private void addPanels() throws IOException {
+	private void initPanels() throws IOException {
 		menuPanel = new JPanel(){
 			private Image backgroundImage = ImageIO.read(new File("/Users/Anka/Desktop/Paragonsy_szkic.jpg"));
 			public void paint(Graphics g) {
